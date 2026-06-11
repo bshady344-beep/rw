@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ألبوم روان الخاص ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0d0614;
+            color: #ffffff;
+            overflow-y: auto; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        /* طبقة خلفية ناعمة بناتي */
+        .pink-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(243, 166, 182, 0.15), rgba(13, 6, 20, 0.95));
+            z-index: -1;
+        }
+
+        /* شاشة القفل */
+        #lock-screen {
+            position: fixed;
+            inset: 0;
+            background: #140b1c;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .lock-container {
+            background: rgba(243, 166, 182, 0.05);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(243, 166, 182, 0.2);
+            max-width: 400px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .lock-container input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 166, 182, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            margin-top: 25px;
+        }
+
+        .lock-container button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        }
+
+        /* النصوص والفقرات */
+        .text-section {
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #f3a6b6;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3, #e8c3fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        /* حاوية ميديا الفيديو في الأعلى */
+        .video-wrapper {
+            width: 90%;
+            max-width: 500px;
+            border-radius: 24px;
+            border: 2px solid #ff7eb3;
+            box-shadow: 0 0 20px rgba(255, 126, 179, 0.3);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        video {
+            width: 100%;
+            display: block;
+        }
+
+        /* حاوية الكروت */
+        .cards-wrapper {
+            width: 100%;
+            max-width: 380px;
+            height: 480px;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .cards-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s, z-index 0s;
+            background: #1c1124;
+            border: 2px solid rgba(243, 166, 182, 0.3);
+        }
+
+        .card:active {
+            cursor: grabbing;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        /* زر الانتقال لصفحة مستر شادي */
+        .redirect-btn {
+            margin-top: 30px;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 117, 140, 0.3);
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .redirect-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 117, 140, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pink-overlay"></div>
+
+    <div id="lock-screen">
+        <div class="lock-container">
+            <h2 style="font-size: 2rem; color: #ff7eb3;">يا الف اهلااا و سهلااا </h2>
+            <p style="color: #cca4db; margin-top: 10px;">اكتبي كلمه السر و عدي...اوعي حد يعرفها دي خصوصيه</p>
+            <input type="password" id="pass-field" placeholder="•••••">
+            <button onclick="unlockPlatform()">ادخلي برجلك اليمين</button>
+            <p id="error-txt" style="color: #ff4d4d; font-size: 0.9rem; margin-top: 12px; display: none;">مش عارفه تكتبي اسمك !!! </p>
+        </div>
+    </div>
+
+    <h1 class="page-title">REWAN</h1>
+
+    <div class="video-wrapper">
+        <video id="rawanVideo" controls>
+            <source src="nar.mp4" type="video/mp4">
+            متصفحك لا يدعم تشغيل هذا المقطع.
+        </video>
+    </div>
+
+    <div class="text-section">
+        <p>دي حاجه مميزه تنهي بيها السنه و هي معاكي .. اي خدمه 
+            <br>
+            كام صوره مسروقين من الفيس كده يمشوا الدنيا 
+        </p>
+    </div>
+
+    <div class="cards-wrapper">
+        <div class="cards-container" id="cardsContainer">
+            <div class="card" data-index="5"><img src="gg.jpg" alt="صورة 5" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="4"><img src="zz.jpg" alt="صورة 4" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="3"><img src="zzz.jpg" alt="صورة 3" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="2"><img src="zzzz.jpg" alt="صورة 2" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="5"><img src="zzzzz.jpg" alt="صورة 5" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="4"><img src="xxx.jpg" alt="صورة 4" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="3"><img src="xxxx.jpg" alt="صورة 3" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="2"><img src="xxxxx.jpg" alt="صورة 2" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="5"><img src="ccc.jpg" alt="صورة 5" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="4"><img src="cccc.jpg" alt="صورة 4" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="3"><img src="ccccc.jpg" alt="صورة 3" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="2"><img src="vvv.jpg" alt="صورة 2" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="1"><img src="vvvv.jpg" alt="صورة 1" onerror="this.style.opacity='0.3'"></div>
+            <div class="card" data-index="1"><img src="vvvvv.jpg" alt="صورة 1" onerror="this.style.opacity='0.3'"></div>
+        </div>
+    </div>
+
+    <div class="text-section" style="color: #e8c3fa;">
+        <p>عشان متبقيش طالعه من السنه دي بمراره بس ، فطلعتك منها بحاجه عدله</p>
+    </div>
+
+    <a href="indx.html" class="redirect-btn">لو عايزه تروحي صفحه المستر✦</a>
+
+    <script>
+        const rawanVideo = document.getElementById('rawanVideo');
+        let cardsArray = [];
+
+        // التحقق من كلمة السر rewan
+        function unlockPlatform() {
+            const val = document.getElementById('pass-field').value;
+            if(val.trim().toLowerCase() === 'rewan') {
+                const lock = document.getElementById('lock-screen');
+                lock.style.transform = 'translateY(-100%)';
+                setTimeout(() => {
+                    lock.remove();
+                    initCards();
+                    // تشغيل الأغنية/الفيديو فوراً عند اجتياز كلمة السر
+                    rawanVideo.play().catch(err => console.log("التشغيل التلقائي يحتاج لتفاعل مسبق"));
+                }, 600);
+            } else {
+                document.getElementById('error-txt').style.display = 'block';
+            }
+        }
+
+        // دعم زر Enter
+        document.getElementById('pass-field').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') unlockPlatform();
+        });
+
+        // إعداد وترتيب الكروت
+        function initCards() {
+            const container = document.getElementById('cardsContainer');
+            cardsArray = Array.from(container.querySelectorAll('.card'));
+            arrangeCards();
+        }
+
+        // تنظيم مواضع الكروت خلف بعضها بصرياً
+        function arrangeCards() {
+            cardsArray.forEach((card, index) => {
+                card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s';
+                card.style.transform = `scale(${1 - index * 0.05}) translateY(-${index * 15}px) translateX(0) rotate(0deg)`;
+                card.style.opacity = index < 3 ? '1' : '0'; // إخفاء الكروت البعيدة جداً لجمال التصميم
+                card.style.zIndex = cardsArray.length - index;
+                
+                // تفعيل السحب للكرت الموجود في المقدمة فقط وتصفير قيم السحب السابقة له
+                if (index === 0) {
+                    addDragEvents(card);
+                } else {
+                    removeDragEvents(card);
+                }
+            });
+        }
+
+        function addDragEvents(card) {
+            card.startX = 0;
+            card.currentX = 0;
+            card.isDragging = false;
+
+            // الأحداث الخاصة باللمس (الموبايل)
+            card.handleTouchStart = (e) => {
+                card.startX = e.touches[0].clientX;
+                card.isDragging = true;
+                card.style.transition = 'none';
+            };
+
+            card.handleTouchMove = (e) => {
+                if (!card.isDragging) return;
+                card.currentX = e.touches[0].clientX - card.startX;
+                card.style.transform = `translateX(${card.currentX}px) rotate(${card.currentX / 10}deg) scale(1)`;
+            };
+
+            card.handleTouchEnd = () => {
+                if (!card.isDragging) return;
+                card.isDragging = false;
+                handleRelease(card, card.currentX);
+            };
+
+            // الأحداث الخاصة بالماوس (الكمبيوتر)
+            card.handleMouseDown = (e) => {
+                card.startX = e.clientX;
+                card.isDragging = true;
+                card.style.transition = 'none';
+                window.addEventListener('mousemove', card.handleMouseMove);
+                window.addEventListener('mouseup', card.handleMouseUp);
+            };
+
+            card.handleMouseMove = (e) => {
+                if (!card.isDragging) return;
+                card.currentX = e.clientX - card.startX;
+                card.style.transform = `translateX(${card.currentX}px) rotate(${card.currentX / 10}deg) scale(1)`;
+            };
+
+            card.handleMouseUp = () => {
+                if (!card.isDragging) return;
+                card.isDragging = false;
+                window.removeEventListener('mousemove', card.handleMouseMove);
+                window.removeEventListener('mouseup', card.handleMouseUp);
+                handleRelease(card, card.currentX);
+            };
+
+            card.addEventListener('touchstart', card.handleTouchStart, { passive: true });
+            card.addEventListener('touchmove', card.handleTouchMove, { passive: true });
+            card.addEventListener('touchend', card.handleTouchEnd);
+            card.addEventListener('mousedown', card.handleMouseDown);
+        }
+
+        function removeDragEvents(card) {
+            card.removeEventListener('touchstart', card.handleTouchStart);
+            card.removeEventListener('touchmove', card.handleTouchMove);
+            card.removeEventListener('touchend', card.handleTouchEnd);
+            card.removeEventListener('mousedown', card.handleMouseDown);
+        }
+
+        function handleRelease(card, finalX) {
+            const threshold = 120; // المسافة المطلوبة لاعتماد السحب وإخفاء الكرت
+            card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+
+            if (finalX > threshold || finalX < -threshold) {
+                // إخراج الكرت المسحوب جانباً بسلاسة
+                const moveOutX = finalX > 0 ? '150%' : '-150%';
+                const rotateOut = finalX > 0 ? '30deg' : '-30deg';
+                card.style.transform = `translateX(${moveOutX}) rotate(${rotateOut})`;
+                card.style.opacity = '0';
+                
+                // نقل الكرت المزال إلى مؤخرة المصفوفة ليعاد عرضه لاحقاً دون حذفه
+                setTimeout(() => {
+                    const container = document.getElementById('cardsContainer');
+                    removeDragEvents(card);
+                    
+                    // سحب الكرت من البداية ووضعه في النهاية داخل المصفوفة والـ DOM ليدور بشكل مستمر
+                    cardsArray.shift();
+                    cardsArray.push(card);
+                    container.appendChild(card);
+                    
+                    arrangeCards();
+                }, 300);
+            } else {
+                // إعادة الكرت لوضعه الطبيعي إذا لم يتجاوز السحب المسافة المطلوبة
+                card.style.transform = 'translateX(0) rotate(0) scale(1)';
+            }
+        }
+    </script>
+</body>
+</html>
